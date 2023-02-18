@@ -1,10 +1,10 @@
-#!name=🍿️ DualSubs for 🇳 Netflix 🔓
+#!name=🍿️ DualSubs: 🇳 Netflix 🔓
 #!desc=(🔓 MitM) Netflix字幕增强及双语模块
 #!openUrl=http://boxjs.com/#/app/DualSubs.Netflix.beta
 #!author=VirgilClyne
 #!homepage=https://github.com/DualSubs
-#!manual=https://github.com/DualSubs/DualSubs-Netflix/wiki/🍿-DualSubs-for-🇳-Netflix
-#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Unlock.png
+#!manual=https://github.com/DualSubs/Netflix/wiki/🍿-DualSubs:-🇳-Netflix
+#!icon=https://github.com/DualSubs/Netflix/raw/main/database/icon_rounded.png
 
 [MITM]
 hostname = %APPEND% www.bing.com, cn.bing.com, translate.google.com, translate.googleapis.com, translation.googleapis.com, api-free.deepl.com, api.deepl.com, *.deepl.com, *.netflix.com, *.nflxvideo.net
