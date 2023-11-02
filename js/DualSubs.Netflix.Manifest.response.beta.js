@@ -2,7 +2,7 @@
 README: https://github.com/DualSubs
 */
 
-const $ = new Env("🍿️ DualSubs: 🇳 Netflix v0.9.0(9) Manifest.response.beta");
+const $ = new Env("🍿️ DualSubs: 🇳 Netflix v0.9.0(10) Manifest.response.beta");
 const URL = new URLs();
 const DataBase = {
 	"Default":{
@@ -60,12 +60,16 @@ const DataBase = {
 	switch (Settings.Switch) {
 		case true:
 		default:
+			// 解构URL
 			let url = URL.parse($request?.url);
+			$.log(`⚠ ${$.name}`, `URL: ${JSON.stringify(url)}`, "");
+			// 获取连接参数
 			const METHOD = $request?.method, HOST = url?.host, PATH = url?.path, PATHs = url?.paths;
+			$.log(`⚠ ${$.name}`, `METHOD: ${METHOD}`, "");
 			// 解析格式
 			let FORMAT = ($response?.headers?.["Content-Type"] ?? $response?.headers?.["content-type"])?.split(";")?.[0];
 			if (FORMAT === "application/octet-stream" || FORMAT === "text/plain") FORMAT = detectFormat(url, $response?.body);
-			$.log(`⚠ ${$.name}, METHOD: ${METHOD}, HOST: ${HOST}, PATH: ${PATH}, PATHs: ${PATHs}, FORMAT: ${FORMAT}`, "");
+			$.log(`⚠ ${$.name}`, `FORMAT: ${FORMAT}`, "");
 			// 设置自定义参数与字幕类型
 			const TYPE = url?.query?.subtype || Settings.Type, Languages = url?.query?.sublang || Settings.Languages, KIND = url?.query?.kind;
 			$.log(`🚧 ${$.name}, TYPE: ${TYPE}, Languages: ${Languages}, KIND: ${KIND}`, "");
@@ -223,8 +227,8 @@ function setENV(name, platforms, database) {
 function detectFormat(url, body) {
 	let format = undefined;
 	$.log(`☑️ ${$.name}`, `detectFormat`, "");
-	$.log(`🚧 ${$.name}`, `detectFormat, format: ${url?.type ?? url?.query?.fmt ?? url?.query?.format}`, "");
-	switch (url?.type ?? url?.query?.fmt ?? url?.query?.format) {
+	$.log(`🚧 ${$.name}`, `detectFormat, format: ${url?.format ?? url?.query?.fmt ?? url?.query?.format}`, "");
+	switch (url?.format ?? url?.query?.fmt ?? url?.query?.format) {
 		case "txt":
 			format = "text/plain";
 			break;
@@ -532,4 +536,4 @@ function Env(t,e){class s{constructor(t){this.env=t}send(t,e="GET"){t="string"==
 function getENV(key,names,database){let BoxJs=$.getjson(key,database),Argument={};if("undefined"!=typeof $argument&&Boolean($argument)){let arg=Object.fromEntries($argument.split("&").map((item=>item.split("="))));for(let item in arg)setPath(Argument,item,arg[item])}const Store={Settings:database?.Default?.Settings||{},Configs:database?.Default?.Configs||{},Caches:{}};Array.isArray(names)||(names=[names]);for(let name of names)Store.Settings={...Store.Settings,...database?.[name]?.Settings,...BoxJs?.[name]?.Settings,...Argument},Store.Configs={...Store.Configs,...database?.[name]?.Configs},BoxJs?.[name]?.Caches&&"string"==typeof BoxJs?.[name]?.Caches&&(BoxJs[name].Caches=JSON.parse(BoxJs?.[name]?.Caches)),Store.Caches={...Store.Caches,...BoxJs?.[name]?.Caches};return function traverseObject(o,c){for(var t in o){var n=o[t];o[t]="object"==typeof n&&null!==n?traverseObject(n,c):c(t,n)}return o}(Store.Settings,((key,value)=>("true"===value||"false"===value?value=JSON.parse(value):"string"==typeof value&&(value?.includes(",")?value=value.split(","):value&&!isNaN(value)&&(value=parseInt(value,10))),value))),Store;function setPath(object,path,value){path.split(".").reduce(((o,p,i)=>o[p]=path.split(".").length===++i?value:o[p]||{}),object)}}
 
 // https://github.com/VirgilClyne/GetSomeFries/blob/main/function/URL/URLs.embedded.min.js
-function URLs(t){return new class{constructor(t=[]){this.name="URL v1.2.4",this.opts=t,this.json={scheme:"",host:"",path:"",type:"",query:{}}}parse(t){let s=t.match(/(?:(?<scheme>.+):\/\/(?<host>[^/]+))?\/?(?<path>[^?]+)?\??(?<query>[^?]+)?/)?.groups??null;return s?.path?s.paths=s.path.split("/"):s.path="",s?.paths?.at(-1)?.includes(".")&&(s.type=s.paths.at(-1).split(".").at(-1)),s?.query&&(s.query=Object.fromEntries(s.query.split("&").map((t=>t.split("="))))),s}stringify(t=this.json){let s="";return t?.scheme&&t?.host&&(s+=t.scheme+"://"+t.host),t?.path&&(s+=t?.host?"/"+t.path:t.path),t?.query&&(s+="?"+Object.entries(t.query).map((t=>t.join("="))).join("&")),s}}(t)}
+function URLs(t) { return new class { constructor(t = []) { this.name = "URL v1.2.5", this.opts = t, this.json = { scheme: "", host: "", path: "", query: {} } } parse(t) { let s = t.match(/(?:(?<scheme>.+):\/\/(?<host>[^/]+))?\/?(?<path>[^?]+)?\??(?<query>[^?]+)?/)?.groups ?? null; if (s?.path ? s.paths = s.path.split("/") : s.path = "", s?.paths) { const t = s.paths[s.paths.length - 1]; if (t?.includes(".")) { const e = t.split("."); s.format = e[e.length - 1] } } return s?.query && (s.query = Object.fromEntries(s.query.split("&").map((t => t.split("="))))), s } stringify(t = this.json) { let s = ""; return t?.scheme && t?.host && (s += t.scheme + "://" + t.host), t?.path && (s += t?.host ? "/" + t.path : t.path), t?.query && (s += "?" + Object.entries(t.query).map((t => t.join("="))).join("&")), s } }(t) }
