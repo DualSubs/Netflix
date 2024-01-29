@@ -6,13 +6,15 @@
 #!manual=https://github.com/DualSubs/Netflix/wiki/🍿-DualSubs:-🇳-Netflix
 #!icon=https://github.com/DualSubs/Netflix/raw/main/database/icon_rounded.png
 #!category=🍿️ DualSubs
+#!arguments=SourceLanguage:AUTO,TargetLanguage:ZH,ShowOnly:false
+#!arguments-desc=SourceLanguage: 主字幕语言（源语言）\nTargetLanguage: 副字幕语言（目标语言）\nShowOnly: 只显示翻译后字幕
 
 [Rule]
 URL-REGEX,^https?:\/\/(ios|tvos|win10)(-anycast)?\.prod\.(ftl|http1|cloud)\.netflix\.com\/msl\/playapi\/(ios|cadmium)\/(manifest|logblob|event)$,REJECT-DROP
 
 [Script]
 DualSubs.Netflix.Manifest.response.json = type=http-response, pattern=^https?:\/\/(ios|tvos|win10)\.prod\.(ftl|http1|cloud)\.netflix\.com\/playapi\/(ios|cadmium)\/manifest$, requires-body=1, debug=1, script-path=https://raw.githubusercontent.com/DualSubs/Netflix/beta/js/DualSubs.Netflix.Manifest.response.beta.js
-DualSubs.Netflix.Subtitles.Translate.response = type=http-response, pattern=^https?:\/\/(.+)\.oca\.nflxvideo\.net\/\?o=\d+&v=\d+&e=\d+&t=.+, requires-body=1, debug=1, script-path=https://raw.githubusercontent.com/DualSubs/Universal/beta/js/DualSubs.Subtitles.Translate.response.beta.js
+DualSubs.Netflix.Subtitles.Translate.response = type=http-response, pattern=^https?:\/\/(.+)\.oca\.nflxvideo\.net\/\?o=\d+&v=\d+&e=\d+&t=.+, requires-body=1, debug=1, script-path=https://raw.githubusercontent.com/DualSubs/Universal/beta/js/Subtitles.Translate.response.beta.js, argument=Languages="{{{SourceLanguage}}},{{{TargetLanguage}}}"&ShowOnly={{{ShowOnly}}}
 
 [MITM]
 hostname = %APPEND% anycast.ftl.netflix.com, oca-api.netflix.com, *.prod.cloud.netflix.com, *.prod.ftl.netflix.com, *.prod.http1.netflix.com, *.oca.nflxvideo.net
