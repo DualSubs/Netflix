@@ -8,8 +8,8 @@
 #!category=🍿️ DualSubs
 
 #[rewrite_local]
-# DualSubs.Netflix.Subtitles.Translate.response
-^https?:\/\/(.+)\.oca\.nflxvideo\.net\/\?o=\d+&v=\d+&e=\d+&t=.+ url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/beta/js/DualSubs.Subtitles.Translate.response.beta.js
+# DualSubs.Netflix.Translate.Subtitles.response
+^https?:\/\/(.+)\.oca\.nflxvideo\.net\/\?o=\d+&v=\d+&e=\d+&t=.+ url script-response-body https://raw.githubusercontent.com/DualSubs/Universal/beta/js/Translate.response.beta.js
 
 #[mitm]
 hostname = *.oca.nflxvideo.net
