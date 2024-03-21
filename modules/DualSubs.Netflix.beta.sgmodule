@@ -9,13 +9,21 @@
 #!arguments=Switch:true,Languages[0]:AUTO,Languages[1]:ZH,ShowOnly:false
 #!arguments-desc=Switch: 功能开关\n    └ 是否启用此平台修改功能\nLanguages[0]: 主字幕语言（源语言）\n    └ 当“主语言”字幕存在时，将生成“主语言/副语言（翻译）”与“主语言（外挂）”的字幕或字幕选项\nLanguages[1]: 副字幕语言（目标语言）\n    └ 当“副语言”字幕存在时，将生成“副语言/主语言（官方）”的字幕或字幕选项\nShowOnly: 只显示翻译后字幕
 
-[Rule]
-URL-REGEX,^https?:\/\/(ios|tvos|win10)(-anycast)?\.prod\.(ftl|http1|cloud)\.netflix\.com\/msl\/playapi\/(ios|cadmium)\/(manifest|logblob|event)$,REJECT-DROP
-
 [Script]
-DualSubs.Netflix.Manifest.response.json = type=http-response, pattern=^https?:\/\/(ios|tvos|win10)\.prod\.(ftl|http1|cloud)\.netflix\.com\/playapi\/(ios|cadmium)\/manifest$, requires-body=1, debug=1, script-path=https://raw.githubusercontent.com/DualSubs/Netflix/beta/js/DualSubs.Netflix.Manifest.response.beta.js
+# Message Security Layer (MSL) v1
+DualSubs.Netflix.msl_v1.cadmium.request = type=http-request, pattern=^https?:\/\/www\.netflix\.com\/nq\/msl_v1\/cadmium\/(pbo_manifests|pbo_licenses)\/%5E1\.0\.0\/router, requires-body=1, debug=1, script-path=https://raw.githubusercontent.com/DualSubs/Netflix/beta/js/Netflix.request.beta.js, argument=
+DualSubs.Netflix.msl_v1.cadmium.response = type=http-response, pattern=^https?:\/\/www\.netflix\.com\/nq\/msl_v1\/cadmium\/(pbo_manifests|pbo_licenses)\/%5E1\.0\.0\/router, requires-body=1, debug=1, script-path=https://raw.githubusercontent.com/DualSubs/Netflix/beta/js/Netflix.response.beta.js, argument=
+DualSubs.Netflix.msl.playapi.cadmium.request = type=http-request, pattern=^https?:\/\/www\.netflix\.com\/msl\/playapi\/cadmium\/(manifest|event|logblob)\/1, requires-body=1, debug=1, script-path=https://raw.githubusercontent.com/DualSubs/Netflix/beta/js/Netflix.request.beta.js, argument=
+DualSubs.Netflix.msl.playapi.cadmium.response = type=http-response, pattern=^https?:\/\/www\.netflix\.com\/msl\/playapi\/cadmium\/(manifest|event|logblob)\/1, requires-body=1, debug=1, script-path=https://raw.githubusercontent.com/DualSubs/Netflix/beta/js/Netflix.response.beta.js, argument=
+DualSubs.Netflix.msl.playapi.cadmium.request = type=http-request, pattern=^https?:\/\/logs\.netflix\.com\/log\/cadmium\/logblob\/1, requires-body=1, debug=1, script-path=https://raw.githubusercontent.com/DualSubs/Netflix/beta/js/Netflix.request.beta.js, argument=
+DualSubs.Netflix.msl.playapi.cadmium.response = type=http-response, pattern=^https?:\/\/logs\.netflix\.com\/log\/cadmium\/logblob\/1, requires-body=1, debug=1, script-path=https://raw.githubusercontent.com/DualSubs/Netflix/beta/js/Netflix.response.beta.js, argument=
+# DualSubs.Netflix.iosplatform.request = type=http-request, pattern=^https?:\/\/ios\.prod\.(ftl|http1)\.netflix\.com\/nq\/iosplatform\/(pbo_manifest|pbo_license)\/~1\.0\.0\/router, requires-body=1, debug=1, script-path=https://raw.githubusercontent.com/DualSubs/Netflix/beta/js/Netflix.request.beta.js, argument=
+# DualSubs.Netflix.iosplatform.response = type=http-response, pattern=^https?:\/\/ios\.prod\.(ftl|http1)\.netflix\.com\/nq\/iosplatform\/(pbo_manifest|pbo_license)\/~1\.0\.0\/router, requires-body=1, debug=1, script-path=https://raw.githubusercontent.com/DualSubs/Netflix/beta/js/Netflix.response.beta.js, argument=
+# DualSubs.Netflix.msl.app.request = type=http-request, pattern=^https?:\/\/(.+)\.prod\.(ftl|http1)\.netflix\.com\/nq(\/msl|msl_v1)?(\/cadmium)?(\/iosplatform)?\/pbo_manifest\/~1\.0\.0\/router, requires-body=1, debug=1, script-path=https://raw.githubusercontent.com/DualSubs/Netflix/beta/js/Netflix.request.beta.js, argument=
+# DualSubs.Netflix.msl.app.response = type=http-response, pattern=^https?:\/\/(.+)\.prod\.(ftl|http1)\.netflix\.com\/nq(\/msl|msl_v1)?(\/cadmium)?(\/iosplatform)?\/pbo_manifest\/~1\.0\.0\/router, requires-body=1, debug=1, script-path=https://raw.githubusercontent.com/DualSubs/Netflix/beta/js/Netflix.response.beta.js, argument=
+# DualSubs Subtitles Translate
 DualSubs.Netflix.Translate.Subtitles.response = type=http-response, pattern=^https?:\/\/(.+)\.oca\.nflxvideo\.net\/\?o=\d+&v=\d+&e=\d+&t=.+, requires-body=1, debug=1, script-path=https://raw.githubusercontent.com/DualSubs/Universal/beta/js/Translate.response.beta.js, argument=Switch={{{Switch}}}&Languages[0]={{{Languages[0]}}}&Languages[1]={{{Languages[1]}}}&ShowOnly={{{ShowOnly}}}
 
 [MITM]
-hostname = %APPEND% anycast.ftl.netflix.com, oca-api.netflix.com, *.prod.cloud.netflix.com, *.prod.ftl.netflix.com, *.prod.http1.netflix.com, *.oca.nflxvideo.net
+hostname = %APPEND% *.netflix.com, *.oca.nflxvideo.net
 tcp-connection = true
