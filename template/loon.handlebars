@@ -1,0 +1,20 @@
+#!name = {{@package 'displayName'}}
+#!desc = {{inline (@package 'description')}}
+#!openUrl = {{@package 'openUrl'}}
+#!author = {{@package 'contributors'}}
+#!homepage = {{@package 'homepage'}}
+#!icon = {{@package 'icon'}}
+#!tag = {{@package 'organizationName'}}
+#!system = {{@package 'system'}}
+#!date = {{now "yyyy-MM-dd HH:mm:ss"}}
+#!version = {{@package 'version'}}
+#!system_version = {{ @package 'systemVersion'}}
+
+[Argument]
+{{{arguments}}}
+
+[Script]
+http-response ^https?:\/\/(.+)\.oca\.nflxvideo\.net\/\?o=\d+&v=\d+&e=\d+&t=.+ requires-body=1, script-path=https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.bundle.js, tag=DualSubs.Netflix.Translate.Subtitles.response
+
+[MITM]
+hostname = *.oca.nflxvideo.net

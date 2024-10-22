@@ -1,30 +1,44 @@
-import _ from './ENV/Lodash.mjs'
-import $Storage from './ENV/$Storage.mjs'
-import ENV from "./ENV/ENV.mjs";
-import URI from "./URI/URI.mjs";
-
-import Database from "./database/index.mjs";
+import {
+	$platform,
+	URL,
+	_,
+	Storage,
+	fetch,
+	notification,
+	log,
+	logError,
+	wait,
+	done,
+	getScript,
+	runScript,
+} from "./utils/utils.mjs";
+import database from "./function/database.mjs";
 import setENV from "./function/setENV.mjs";
 import detectFormat from "./function/detectFormat.mjs";
-
-const $ = new ENV("🍿️ DualSubs: 🇳 Netflix v0.1.0(2) response.beta");
-
 /***************** Processing *****************/
 // 解构URL
-const URL = URI.parse($request.url);
-$.log(`⚠ URL: ${JSON.stringify(URL)}`, "");
+const url = new URL($request.url);
+log(`⚠ url: ${url.toJSON()}`, "");
 // 获取连接参数
-const METHOD = $request.method, HOST = URL.host, PATH = URL.path, PATHs = URL.paths;
-$.log(`⚠ METHOD: ${METHOD}`, "");
+const METHOD = $request.method;
+const HOST = url.hostname;
+const PATH = url.pathname;
+const PATHs = url.pathname.split("/").filter(Boolean);
+log(`⚠ METHOD: ${METHOD}`, "");
 // 解析格式
 let FORMAT = ($response.headers?.["Content-Type"] ?? $response.headers?.["content-type"])?.split(";")?.[0];
-if (FORMAT === "application/octet-stream" || FORMAT === "text/plain" || FORMAT === undefined) FORMAT = detectFormat(URL, $response.body, FORMAT);
-$.log(`⚠ FORMAT: ${FORMAT}`, "");
+if (FORMAT === "application/octet-stream" || FORMAT === "text/plain" || FORMAT === undefined) FORMAT = detectFormat(url, $response.body, FORMAT);
+log(`⚠ FORMAT: ${FORMAT}`, "");
 (async () => {
-	const { Settings, Caches, Configs } = setENV("DualSubs", "Netflix", Database);
-	$.log(`⚠ Settings.Switch: ${Settings?.Switch}`, "");
+	/**
+	 * 设置
+	 * @type {{Settings: import('./types').Settings}}
+	 */
+	const { Settings, Caches, Configs } = setENV("DualSubs", "Netflix", database);
+	log(`⚠ Settings.Switch: ${Settings?.Switch}`, "");
 	switch (Settings.Switch) {
-		case true:
+		case false:
+			break;
 		default:
 			// 创建空数据
 			let body = {};
@@ -41,7 +55,7 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 				case "application/vnd.apple.mpegurl":
 				case "audio/mpegurl":
 					//body = M3U8.parse($response.body);
-					//$.log(`🚧 body: ${JSON.stringify(body)}`, "");
+					//log(`🚧 body: ${JSON.stringify(body)}`, "");
 					//$response.body = M3U8.stringify(body);
 					break;
 				case "text/xml":
@@ -51,19 +65,19 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 				case "application/plist":
 				case "application/x-plist":
 					//body = XML.parse($response.body);
-					//$.log(`🚧 body: ${JSON.stringify(body)}`, "");
+					//log(`🚧 body: ${JSON.stringify(body)}`, "");
 					break;
 				case "text/vtt":
 				case "application/vtt":
 					//body = VTT.parse($response.body);
-					//$.log(`🚧 body: ${JSON.stringify(body)}`, "");
+					//log(`🚧 body: ${JSON.stringify(body)}`, "");
 					//$response.body = VTT.stringify(body);
 					break;
 				case "text/json":
 				case "application/json":
 					if ($response.body.includes("}{")) body = JSON.parse(`[${$response.body.replaceAll('}{','},{')}]`);
 					else body = JSON.parse($response.body ?? "{}");
-					$.log(`🚧 body: ${JSON.stringify(body, null, 2)}`, "");
+					log(`🚧 body: ${JSON.stringify(body, null, 2)}`, "");
 					// 主机判断
 					switch (HOST) {
 						case "www.netflix.com":
@@ -84,24 +98,24 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 										};
 										if (item?.entityauthdata){
 											const authdata = item.entityauthdata;
-											$.log(`🚧 authdata: ${JSON.stringify(authdata, null, 2)}`, "");
-											//$Storage.setItem(`@DualSubs.${"Netflix"}.Caches.MSL.authdata`, authdata);
+											log(`🚧 authdata: ${JSON.stringify(authdata, null, 2)}`, "");
+											//Storage.setItem(`@DualSubs.${"Netflix"}.Caches.MSL.authdata`, authdata);
 										};
 										if (item?.headerdata){
 											const headerdata = JSON.parse(atob(item.headerdata));
-											$.log(`🚧 headerdata: ${JSON.stringify(headerdata, null, 2)}`, "");
+											log(`🚧 headerdata: ${JSON.stringify(headerdata, null, 2)}`, "");
 											if (headerdata.keyresponsedata) {
 												const keyresponsedata = headerdata.keyresponsedata;
-												$.log(`🚧 keyresponsedata: ${JSON.stringify(keyresponsedata, null, 2)}`, "");
-												$.log(`🚧 hmacKeyEncStr: ${keyresponsedata.keydata.hmackey}`, "");
-												$.log(`🚧 encKeyEncStr: ${keyresponsedata.keydata.encryptionkey}`, "");
-												$Storage.setItem(`@DualSubs.${"Netflix"}.Caches.MSL.keyresponsedata`, keyresponsedata);
+												log(`🚧 keyresponsedata: ${JSON.stringify(keyresponsedata, null, 2)}`, "");
+												log(`🚧 hmacKeyEncStr: ${keyresponsedata.keydata.hmackey}`, "");
+												log(`🚧 encKeyEncStr: ${keyresponsedata.keydata.encryptionkey}`, "");
+												Storage.setItem(`@DualSubs.${"Netflix"}.Caches.MSL.keyresponsedata`, keyresponsedata);
 											};
 										};
 										if (item?.mastertoken?.tokendata){
 											const tokendata = JSON.parse(atob(item.mastertoken.tokendata));
-											$.log(`🚧 tokendata: ${JSON.stringify(tokendata, null, 2)}`, "");
-											$Storage.setItem(`@DualSubs.${"Netflix"}.Caches.MSL.tokendata`, tokendata);
+											log(`🚧 tokendata: ${JSON.stringify(tokendata, null, 2)}`, "");
+											Storage.setItem(`@DualSubs.${"Netflix"}.Caches.MSL.tokendata`, tokendata);
 										};
 									});
 									break;
@@ -122,9 +136,7 @@ $.log(`⚠ FORMAT: ${FORMAT}`, "");
 					break;
 			};
 			break;
-		case false:
-			break;
 	};
 })()
-	.catch((e) => $.logErr(e))
-	.finally(() => $.done($response))
+	.catch((e) => logError(e))
+	.finally(() => done($response));
