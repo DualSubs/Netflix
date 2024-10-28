@@ -19,11 +19,11 @@ http:
     - "*.oca.nflxvideo.net"
   script:
     - match: ^https?:\/\/(.+)\.oca\.nflxvideo\.net\/\?o=\d+&v=\d+&e=\d+&t=.+
-      name: DualSubs.Netflix.Translate.Subtitles.response
+      name: 🍿️ DualSubs.Netflix.Translate.Subtitles.response
       type: response
       require-body: true
 
 script-providers:
-  DualSubs.Netflix.Translate.Subtitles.response:
+  🍿️ DualSubs.Netflix.Translate.Subtitles.response:
     url: https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.bundle.js
     interval: 86400
