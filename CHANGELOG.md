@@ -1,2 +1,3 @@
 ### 🔄 Other Changes
-  * 打包器由 `rollup` 更改为 `rspack`
+  * 优化 `Surge` 模块内置`参数面板`
+  * 优化 `Loon` 插件内置`设置面板`
