@@ -46,7 +46,7 @@ export default defineConfig({
 		},
 		{
 			key: "Type",
-			name: "[字幕]启用类型",
+			name: "[字幕] 启用类型",
 			defaultValue: "Translate",
 			type: "string",
 			boxJsType: "selects",
@@ -60,12 +60,12 @@ export default defineConfig({
 		},
 		{
 			key: "Languages[0]",
-			name: "[字幕]主语言（源语言）",
+			name: "[字幕] 主语言（源语言）",
 			defaultValue: "AUTO",
 			type: "string",
 			boxJsType: "selects",
 			description:
-				"当“主语言”字幕存在时，将生成“主语言/副语言（翻译）”与“主语言（外挂）”的字幕或字幕选项。",
+				"当“主语言”字幕存在时，将生成“主语言/副语言（翻译）”与“主语言（外挂）”的字幕或字幕选项。仅当源语言识别不准确时更改此选项。",
 			options: [
 				{
 					key: "AUTO",
@@ -92,32 +92,8 @@ export default defineConfig({
 					label: "English - 英语（自动）",
 				},
 				{
-					key: "EN-US",
-					label: "英语（美国）",
-				},
-				{
-					key: "EN-US SDH",
-					label: "英语（美国）[CC]",
-				},
-				{
 					key: "ES",
 					label: "Español - 西班牙语（自动）",
-				},
-				{
-					key: "ES-ES",
-					label: "Español - 西班牙语",
-				},
-				{
-					key: "ES-ES SDH",
-					label: "西班牙语[CC]",
-				},
-				{
-					key: "ES-419",
-					label: "西班牙语（拉丁美洲）",
-				},
-				{
-					key: "ES-419 SDH",
-					label: "西班牙语（拉丁美洲）[CC]",
 				},
 				{
 					key: "JA",
@@ -139,11 +115,15 @@ export default defineConfig({
 					key: "TR",
 					label: "Türkçe - 土耳其语",
 				},
+				{
+					key: "KM",
+					label: "ភាសាខ្មែរ - 高棉语",
+				},
 			],
 		},
 		{
 			key: "Languages[1]",
-			name: "[字幕]副语言（目标语言）",
+			name: "[字幕] 副语言（目标语言）",
 			defaultValue: "ZH",
 			type: "string",
 			boxJsType: "selects",
@@ -151,10 +131,6 @@ export default defineConfig({
 				"当“副语言”字幕存在时，将生成“副语言/主语言（官方）”的字幕或字幕选项。",
 			options: [
 				{
-					key: "AUTO",
-					label: "自动 - Automatic",
-				},
-				{
 					key: "ZH",
 					label: "中文（自动）",
 				},
@@ -179,10 +155,6 @@ export default defineConfig({
 					label: "英语（美国）",
 				},
 				{
-					key: "EN-US SDH",
-					label: "英语（美国）[CC]",
-				},
-				{
 					key: "ES",
 					label: "Español - 西班牙语（自动）",
 				},
@@ -191,16 +163,8 @@ export default defineConfig({
 					label: "Español - 西班牙语",
 				},
 				{
-					key: "ES-ES SDH",
-					label: "西班牙语[CC]",
-				},
-				{
 					key: "ES-419",
 					label: "西班牙语（拉丁美洲）",
-				},
-				{
-					key: "ES-419 SDH",
-					label: "西班牙语（拉丁美洲）[CC]",
 				},
 				{
 					key: "JA",
@@ -222,18 +186,22 @@ export default defineConfig({
 					key: "TR",
 					label: "Türkçe - 土耳其语",
 				},
+				{
+					key: "KM",
+					label: "ភាសាខ្មែរ - 高棉语",
+				},
 			],
 		},
 		{
 			key: "ShowOnly",
-			name: "[字幕]只显示翻译字幕",
+			name: "[字幕] 只显示翻译字幕",
 			defaultValue: false,
 			type: "boolean",
 			description: "是否仅显示翻译后的字幕，不显示源语言字幕。",
 		},
 		{
 			key: "Position",
-			name: "[字幕]主语言（源语言）字幕位置",
+			name: "[字幕] 主语言（源语言）字幕位置",
 			defaultValue: "Forward",
 			type: "string",
 			description: "主语言（源语言）字幕的显示位置。",
