@@ -193,13 +193,6 @@ export default defineConfig({
 			],
 		},
 		{
-			key: "ShowOnly",
-			name: "[字幕] 只显示翻译字幕",
-			defaultValue: false,
-			type: "boolean",
-			description: "是否仅显示翻译后的字幕，不显示源语言字幕。",
-		},
-		{
 			key: "Position",
 			name: "[字幕] 主语言（源语言）字幕位置",
 			defaultValue: "Forward",
@@ -218,7 +211,7 @@ export default defineConfig({
 		},
 		{
 			key: "Vendor",
-			name: "[翻译器]服务商API",
+			name: "[翻译器] 服务商API",
 			defaultValue: "Google",
 			type: "string",
 			description: "请选择翻译器所使用的服务商API，更多翻译选项请使用BoxJs。",
@@ -232,6 +225,13 @@ export default defineConfig({
 					label: "Microsoft Translator（需填写API）",
 				},
 			],
+		},
+		{
+			key: "ShowOnly",
+			name: "[翻译器] 只显示翻译字幕",
+			defaultValue: false,
+			type: "boolean",
+			description: "是否仅显示翻译后的字幕，不显示源语言字幕。",
 		},
 	],
 });
