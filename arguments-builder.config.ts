@@ -3,26 +3,26 @@ import { defineConfig } from "@iringo/arguments-builder";
 export default defineConfig({
 	output: {
 		surge: {
-			path: "./dist/Netflix.sgmodule",
+			path: "./dist/DualSubs.Netflix.sgmodule",
 		},
 		loon: {
-			path: "./dist/Netflix.plugin",
+			path: "./dist/DualSubs.Netflix.plugin",
 		},
 		customItems: [
 			{
-				path: "./dist/Netflix.snippet",
+				path: "./dist/DualSubs.Netflix.snippet",
 				template: "./template/quantumultx.handlebars",
 			},
 			{
-				path: "./dist/Netflix.stoverride",
+				path: "./dist/DualSubs.Netflix.stoverride",
 				template: "./template/stash.handlebars",
 			},
 			{
-				path: "./dist/Netflix.yaml",
+				path: "./dist/DualSubs.Netflix.yaml",
 				template: "./template/egern.handlebars",
 			},
 			{
-				path: "./dist/Netflix.srmodule",
+				path: "./dist/DualSubs.Netflix.srmodule",
 				template: "./template/shadowrocket.handlebars",
 			},
 		],
