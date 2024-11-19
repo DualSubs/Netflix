@@ -4,6 +4,10 @@ export default defineConfig({
 	output: {
 		surge: {
 			path: "./dist/DualSubs.Netflix.sgmodule",
+			transformEgern: {
+				enable: true,
+				path: "./dist/DualSubs.Netflix.yaml",
+			},
 		},
 		loon: {
 			path: "./dist/DualSubs.Netflix.plugin",
@@ -16,10 +20,6 @@ export default defineConfig({
 			{
 				path: "./dist/DualSubs.Netflix.stoverride",
 				template: "./template/stash.handlebars",
-			},
-			{
-				path: "./dist/DualSubs.Netflix.yaml",
-				template: "./template/egern.handlebars",
 			},
 			{
 				path: "./dist/DualSubs.Netflix.srmodule",
@@ -36,14 +36,6 @@ export default defineConfig({
 		},
 	},
 	args: [
-		{
-			key: "Switch",
-			name: "总功能开关",
-			defaultValue: true,
-			type: "boolean",
-			description: "是否启用此APP修改",
-			exclude: ["surge", "loon"],
-		},
 		{
 			key: "Type",
 			name: "[字幕] 启用类型",
