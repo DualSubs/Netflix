@@ -10,11 +10,11 @@ permissions:
   contents: read
 
 jobs:
-  debug:
+  dev:
     uses: ./.github/workflows/dev.yml
     secrets: inherit
   deploy:
-    needs: debug
+    needs: dev
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact

@@ -56,8 +56,7 @@ export default defineConfig({
 			defaultValue: "AUTO",
 			type: "string",
 			boxJsType: "selects",
-			description:
-				"当“主语言”字幕存在时，将生成“主语言/副语言（翻译）”与“主语言（外挂）”的字幕或字幕选项。仅当源语言识别不准确时更改此选项。",
+			description: "当“主语言”字幕存在时，将生成“主语言/副语言（翻译）”与“主语言（外挂）”的字幕或字幕选项。仅当源语言识别不准确时更改此选项。",
 			options: [
 				{
 					key: "AUTO",
@@ -119,8 +118,7 @@ export default defineConfig({
 			defaultValue: "ZH",
 			type: "string",
 			boxJsType: "selects",
-			description:
-				"当“副语言”字幕存在时，将生成“副语言/主语言（官方）”的字幕或字幕选项。",
+			description: "当“副语言”字幕存在时，将生成“副语言/主语言（官方）”的字幕或字幕选项。",
 			options: [
 				{
 					key: "ZH",
@@ -143,20 +141,8 @@ export default defineConfig({
 					label: "English - 英语（自动）",
 				},
 				{
-					key: "EN-US",
-					label: "英语（美国）",
-				},
-				{
 					key: "ES",
 					label: "Español - 西班牙语（自动）",
-				},
-				{
-					key: "ES-ES",
-					label: "Español - 西班牙语",
-				},
-				{
-					key: "ES-419",
-					label: "西班牙语（拉丁美洲）",
 				},
 				{
 					key: "JA",
@@ -223,7 +209,22 @@ export default defineConfig({
 			name: "[翻译器] 只显示翻译字幕",
 			defaultValue: false,
 			type: "boolean",
-			description: "是否仅显示翻译后的字幕，不显示源语言字幕。",
+			description: "是否仅显示翻译后字幕，不显示源语言字幕。",
+		},
+		{
+			key: "LogLevel",
+			name: "[调试] 日志等级",
+			type: "string",
+			defaultValue: "WARN",
+			description: "选择脚本日志的输出等级，低于所选等级的日志将全部输出。",
+			options: [
+				{ key: "OFF", label: "关闭" },
+				{ key: "ERROR", label: "❌ 错误" },
+				{ key: "WARN", label: "⚠️ 警告" },
+				{ key: "INFO", label: "ℹ️ 信息" },
+				{ key: "DEBUG", label: "🅱️ 调试" },
+				{ key: "ALL", label: "全部" },
+			],
 		},
 	],
 });

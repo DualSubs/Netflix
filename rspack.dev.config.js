@@ -5,8 +5,8 @@ import pkg from "./package.json" with { type: "json" };
 
 export default defineConfig({
 	entry: {
-		request: "./src/request.dev.js",
-		response: "./src/response.dev.js",
+		//request: "./src/request.dev.js",
+		//response: "./src/response.dev.js",
 	},
 	output: {
 		filename: "[name].bundle.js",
