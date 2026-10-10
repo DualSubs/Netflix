@@ -21,20 +21,6 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: artifact
-      - name: Deploy Request
-        uses: exuanbo/actions-deploy-gist@main
-        with:
-          token: ${{ secrets.GIST_TOKEN }}
-          gist_id: e9cf9f1b7044c93f94c926de94bb5a7b
-          gist_description: "🍿️ DualSubs: 🇳 Netflix β"
-          file_path: dist/request.bundle.js
-      - name: Deploy Reponse
-        uses: exuanbo/actions-deploy-gist@main
-        with:
-          token: ${{ secrets.GIST_TOKEN }}
-          gist_id: e9cf9f1b7044c93f94c926de94bb5a7b
-          gist_description: "🍿️ DualSubs: 🇳 Netflix β"
-          file_path: dist/response.bundle.js
       - name: Deploy module settings and development templates
         env:
           GH_TOKEN: ${{ secrets.GIST_TOKEN }}
