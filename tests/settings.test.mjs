@@ -3,9 +3,11 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import vm from "node:vm";
 
+const suffix = process.env.SETTINGS_CHANNEL === "dev" ? ".dev" : "";
+
 test("module settings retain both proxy response protocols and bodyless HEAD detection", async () => {
-	const expected = JSON.parse(await readFile("dist/DualSubs.Netflix.dev.PreferencePanes.json", "utf8"));
-	const source = await readFile("dist/config.dev.bundle.js", "utf8");
+	const expected = JSON.parse(await readFile(`dist/DualSubs.Netflix${suffix}.PreferencePanes.json`, "utf8"));
+	const source = await readFile(`dist/config${suffix}.bundle.js`, "utf8");
 	for (const method of ["GET", "HEAD"])
 		for (const quantumult of [false, true]) {
 			let result;

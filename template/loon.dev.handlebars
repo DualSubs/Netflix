@@ -7,14 +7,14 @@
 #!tag = {{@package 'organizationName'}}
 #!system = {{@package 'system'}}
 #!date = {{now "yyyy-MM-dd HH:mm:ss"}}
-#!version = dev
+#!version = {{version}}
 #!system_version = {{ @package 'systemVersion'}}
 
 [Argument]
 {{{arguments}}}
 
 [Rewrite]
-response if ${url} ~= /^https:\/\/dualsubs\.github\.io\/api\/Netflix(?:\?.*)?$/i then response.body.mock_file("json", "https://gist.githubusercontent.com/VirgilClyne/e9cf9f1b7044c93f94c926de94bb5a7b/raw/DualSubs.Netflix.dev.PreferencePanes.json", 200) | response.header.add(["X-PreferencePanes-Version", "Cache-Control"], ["dev", "no-store"])
+response if ${url} ~= /^https:\/\/dualsubs\.github\.io\/api\/Netflix(?:\?.*)?$/i then response.body.mock_file("json", "https://gist.githubusercontent.com/VirgilClyne/e9cf9f1b7044c93f94c926de94bb5a7b/raw/DualSubs.Netflix.dev.PreferencePanes.json", 200) | response.header.add(["X-PreferencePanes-Version", "Cache-Control"], ["{{version}}", "no-store"])
 
 [Script]
 http-response ^https?:\/\/(.+)\.oca\.nflxvideo\.net\/\?o=\d+&v=\d+&e=\d+&t=.+ requires-body=1, script-path=https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.bundle.js, tag=🍿️ DualSubs.Netflix.Translate.Subtitles.response

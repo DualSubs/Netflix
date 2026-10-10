@@ -1,5 +1,6 @@
 name: Deploy
 on:
+  workflow_dispatch:
   push:
     # Sequence of patterns matched against refs/heads
     branches:
@@ -18,17 +19,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@master
+        uses: actions/download-artifact@v8
         with:
           name: artifact
-      - name: Deploy module settings and development templates
+      - name: Publish scripts, configuration and subscriptions together
         env:
           GH_TOKEN: ${{ secrets.GIST_TOKEN }}
         run: |
           node --input-type=module <<'JS'
           import { readFile, writeFile } from "node:fs/promises";
-          const names = ["DualSubs.Netflix.dev.sgmodule", "DualSubs.Netflix.dev.plugin", "DualSubs.Netflix.dev.snippet", "DualSubs.Netflix.dev.stoverride", "DualSubs.Netflix.dev.yaml", "DualSubs.Netflix.dev.srmodule", "DualSubs.Netflix.dev.PreferencePanes.json", "config.dev.bundle.js"];
+          const names = ["DualSubs.Netflix.dev.sgmodule", "DualSubs.Netflix.dev.plugin", "DualSubs.Netflix.dev.snippet", "DualSubs.Netflix.dev.stoverride", "DualSubs.Netflix.dev.srmodule", "DualSubs.Netflix.dev.yaml", "DualSubs.Netflix.dev.boxjs.json", "DualSubs.Netflix.dev.PreferencePanes.json", "config.dev.bundle.js"];
           const files = Object.fromEntries(await Promise.all(names.map(async name => [name, { content: await readFile(`dist/${name}`, "utf8") }])));
-          await writeFile("gist-update.json", JSON.stringify({ files }));
+          await writeFile("gist-update.json", JSON.stringify({ description: "🍿️ DualSubs: 🇳 Netflix β", files }));
           JS
           gh api --method PATCH gists/e9cf9f1b7044c93f94c926de94bb5a7b --input gist-update.json --silent

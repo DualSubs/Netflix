@@ -6,12 +6,12 @@
 #!icon = {{@package 'icon'}}
 #!category = {{@package 'organizationName'}}
 #!date = {{now "yyyy-MM-dd HH:mm:ss"}}
-#!version = dev
+#!version = {{version}}
 #!arguments = {{{arguments}}}
 #!arguments-desc = {{{argumentsDesc}}}
 
 [Map Local]
-^https:\/\/dualsubs\.github\.io\/api\/Netflix(?:\?.*)?$ data-type=file data="https://gist.githubusercontent.com/VirgilClyne/e9cf9f1b7044c93f94c926de94bb5a7b/raw/DualSubs.Netflix.dev.PreferencePanes.json" status-code=200 header="Content-Type:application/json; charset=utf-8|Cache-Control:no-store|X-PreferencePanes-Version:dev"
+^https:\/\/dualsubs\.github\.io\/api\/Netflix(?:\?.*)?$ data-type=file data="https://gist.githubusercontent.com/VirgilClyne/e9cf9f1b7044c93f94c926de94bb5a7b/raw/DualSubs.Netflix.dev.PreferencePanes.json" status-code=200 header="Content-Type:application/json; charset=utf-8|Cache-Control:no-store|X-PreferencePanes-Version:{{version}}"
 
 [Script]
 🍿️ DualSubs.Netflix.Translate.Subtitles.response = type=http-response, pattern=^https?:\/\/(.+)\.oca\.nflxvideo\.net\/\?o=\d+&v=\d+&e=\d+&t=.+, requires-body=1, script-path=https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.bundle.js, argument={{{scriptParams}}}

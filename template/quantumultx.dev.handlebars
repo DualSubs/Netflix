@@ -6,10 +6,10 @@
 #!icon = {{@package 'icon'}}
 #!category = {{@package 'organizationName'}}
 #!date = {{now "yyyy-MM-dd HH:mm:ss"}}
-#!version = dev
+#!version = {{version}}
 
 #[rewrite_local]
-^https:\/\/dualsubs\.github\.io\/api\/Netflix(?:\?.*)?$ url echo-response application/json\r\nX-PreferencePanes-Version: dev echo-response https://gist.githubusercontent.com/VirgilClyne/e9cf9f1b7044c93f94c926de94bb5a7b/raw/DualSubs.Netflix.dev.PreferencePanes.json
+^https:\/\/dualsubs\.github\.io\/api\/Netflix(?:\?.*)?$ url echo-response application/json\r\nX-PreferencePanes-Version: {{version}} echo-response https://gist.githubusercontent.com/VirgilClyne/e9cf9f1b7044c93f94c926de94bb5a7b/raw/DualSubs.Netflix.dev.PreferencePanes.json
 # 🍿️ DualSubs.Netflix.Translate.Subtitles.response
 ^https?:\/\/(.+)\.oca\.nflxvideo\.net\/\?o=\d+&v=\d+&e=\d+&t=.+ url script-response-body https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.bundle.js
 
