@@ -13,8 +13,11 @@
 [Argument]
 {{{arguments}}}
 
+[Rewrite]
+response if ${url} ~= /^https:\/\/dualsubs\.github\.io\/api\/Netflix(?:\?.*)?$/i then response.body.mock_file("json", "https://github.com/DualSubs/Netflix/releases/download/v{{@package 'version'}}/DualSubs.Netflix.PreferencePanes.json", 200) | response.header.add(["X-PreferencePanes-Version", "Cache-Control"], ["{{@package 'version'}}", "no-store"])
+
 [Script]
 http-response ^https?:\/\/(.+)\.oca\.nflxvideo\.net\/\?o=\d+&v=\d+&e=\d+&t=.+ requires-body=1, script-path=https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.bundle.js, tag=🍿️ DualSubs.Netflix.Translate.Subtitles.response
 
 [MITM]
-hostname = *.oca.nflxvideo.net
+hostname = dualsubs.github.io, *.oca.nflxvideo.net

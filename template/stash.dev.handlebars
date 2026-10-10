@@ -1,0 +1,37 @@
+name: "{{@package 'displayName'}}"
+desc: |-
+  {{#each (split (@package 'description') "\n")}}
+  {{{this}}}
+  {{/each}}
+openUrl: "{{@package 'openUrl'}}"
+author: |-
+  {{#each (@package 'contributors')}}
+  {{this}}
+  {{/each}}
+homepage: "{{@package 'homepage'}}"
+icon: "{{@package 'icon'}}"
+category: "{{@package 'organizationName'}}"
+date: "{{now "yyyy-MM-dd HH:mm:ss"}}"
+version: "dev"
+
+http:
+  mitm:
+    - "dualsubs.github.io"
+    - "*.oca.nflxvideo.net"
+  script:
+    - match: ^https:\/\/dualsubs\.github\.io\/api\/Netflix(?:\?.*)?$
+      name: 📺 DualSubs.Netflix.Config
+      type: request
+      require-body: false
+    - match: ^https?:\/\/(.+)\.oca\.nflxvideo\.net\/\?o=\d+&v=\d+&e=\d+&t=.+
+      name: 🍿️ DualSubs.Netflix.Translate.Subtitles.response
+      type: response
+      require-body: true
+
+script-providers:
+  📺 DualSubs.Netflix.Config:
+    url: https://gist.githubusercontent.com/VirgilClyne/e9cf9f1b7044c93f94c926de94bb5a7b/raw/config.dev.bundle.js
+    interval: 86400
+  🍿️ DualSubs.Netflix.Translate.Subtitles.response:
+    url: https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.bundle.js
+    interval: 86400

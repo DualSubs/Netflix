@@ -9,8 +9,9 @@
 #!version = {{@package 'version'}}
 
 #[rewrite_local]
+^https:\/\/dualsubs\.github\.io\/api\/Netflix(?:\?.*)?$ url echo-response application/json\r\nX-PreferencePanes-Version: {{@package 'version'}} echo-response https://github.com/DualSubs/Netflix/releases/download/v{{@package 'version'}}/DualSubs.Netflix.PreferencePanes.json
 # 🍿️ DualSubs.Netflix.Translate.Subtitles.response
 ^https?:\/\/(.+)\.oca\.nflxvideo\.net\/\?o=\d+&v=\d+&e=\d+&t=.+ url script-response-body https://github.com/DualSubs/Universal/releases/latest/download/Translate.response.bundle.js
 
 #[mitm]
-hostname = *.oca.nflxvideo.net
+hostname = dualsubs.github.io, *.oca.nflxvideo.net
