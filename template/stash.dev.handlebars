@@ -19,6 +19,11 @@ http:
     - "dualsubs.github.io"
     - "*.oca.nflxvideo.net"
   script:
+    - match: ^https:\/\/dualsubs\.github\.io\/api\/(?:get|set|delete)(?:\?.*)?$
+      name: PreferencePanes.API
+      type: request
+      require-body: true
+      max-size: 65536
     - match: ^https:\/\/dualsubs\.github\.io\/api\/Netflix(?:\?.*)?$
       name: 📺 DualSubs.Netflix.Config
       type: request
@@ -29,6 +34,9 @@ http:
       require-body: true
 
 script-providers:
+  PreferencePanes.API:
+    url: https://github.com/NSNanoCat/PreferencePanes/releases/download/v1.3.1/api.js
+    interval: 86400
   📺 DualSubs.Netflix.Config:
     url: https://gist.githubusercontent.com/VirgilClyne/e9cf9f1b7044c93f94c926de94bb5a7b/raw/config.dev.bundle.js
     interval: 86400
